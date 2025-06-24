@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>页面未找到 - 404</title>
+  <style>
+      * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+      }
+
+      body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          background: linear-gradient(135deg, #f2f4f7, #e4e7ec);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          color: #333;
+      }
+
+      .container {
+          text-align: center;
+          padding: 40px;
+          background-color: white;
+          border-radius: 16px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+          max-width: 400px;
+          width: 90%;
+      }
+
+      .status {
+          font-size: 96px;
+          font-weight: bold;
+          color: #ff4d4f;
+      }
+
+      .message {
+          font-size: 20px;
+          margin-top: 10px;
+          color: #555;
+      }
+
+      .tip {
+          margin-top: 16px;
+          color: #888;
+          font-size: 14px;
+      }
+
+      .btn {
+          display: inline-block;
+          margin-top: 24px;
+          padding: 10px 20px;
+          background-color: #1677ff;
+          color: white;
+          text-decoration: none;
+          border-radius: 8px;
+          transition: background-color 0.3s ease;
+      }
+
+      .btn:hover {
+          background-color: #0958d9;
+      }
+
+      @media (max-width: 480px) {
+          .status {
+              font-size: 72px;
+          }
+      }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="status">404</div>
+  <div class="message">页面未找到</div>
+  <div class="tip">抱歉，您访问的页面不存在或已被删除。</div>
+</div>
+</body>
+</html>
