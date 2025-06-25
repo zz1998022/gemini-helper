@@ -15,3 +15,4 @@
 2025-06-25 13:22:23 [info]: GET /api-docs/swagger-ui-init.js 304 - - 2.476 ms
 2025-06-25 13:22:23 [info]: GET /api-docs/favicon-32x32.png 304 - - 0.703 ms
 2025-06-25 13:22:28 [info]: GET /api/menu/menuList?pageNum=1&pageSize=11 200 24528 - 92.291 ms
+2025-06-25 15:19:49 [info]: GET /swagger.json 200 6497 - 2.910 ms

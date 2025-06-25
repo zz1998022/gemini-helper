@@ -7,7 +7,7 @@ import express from 'express'
 import { Request, Response, NextFunction } from 'express'
 import swaggerUi from 'swagger-ui-express'
 
-import swaggerDocument from '@config/swagger'
+import swaggerDocumentFile from '@config/swagger'
 import ChatRoute from '@src/routes/gemini/chatRoute'
 import MenuRoute from '@src/routes/gemini/menuRoute'
 import UploadRoute from '@src/routes/gemini/uploadRoute'
@@ -45,16 +45,22 @@ class App {
 
   private swagger(): void {
     const staticFile = mode === 'dev' ? '../public' : './public'
-    // 👇 读取 swagger.json 文件
-    // const swaggerPath = path.join(__dirname, staticFile, 'swagger.json') // 根据实际路径调整
-    // const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf8'))
-    // console.log(swaggerDocument)
-
-    this.express.use(
-      '/api-docs',
-      swaggerUi.serve,
-      swaggerUi.setup(swaggerDocument),
-    )
+    if (mode === 'dev') {
+      this.express.use(
+        '/api-docs',
+        swaggerUi.serve,
+        swaggerUi.setup(swaggerDocumentFile),
+      )
+    } else {
+      // 读取 swagger.json 文件
+      const swaggerPath = path.join(__dirname, staticFile, 'swagger.json') // 根据实际路径调整
+      const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf8'))
+      this.express.use(
+        '/api-docs',
+        swaggerUi.serve,
+        swaggerUi.setup(swaggerDocument),
+      )
+    }
   }
 
   private cors(): void {

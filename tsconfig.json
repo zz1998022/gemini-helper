@@ -12,12 +12,11 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
       "@src/*": ["./src/*"],
       "@utils/*": ["./src/utils/*"],
       "@svcs/*": ["./src/services/*"],
       "@ctrls/*": ["./src/controllers/*"],
-      "@config/*": ["./src/config/*"]
+      "@config/*": ["./src/config/*"],
     }
   },
   "include": ["src/**/*"]

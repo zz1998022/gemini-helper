@@ -10,6 +10,7 @@
     "start": "cross-env NODE_ENV=prod node dist/index.js",
     "start:prod": "cross-env NODE_ENV=prod node dist/index.js",
     "generate:swagger": "tsx scripts/generate-swagger-json.ts",
+    "prisma:generate": "dotenv -e .env.dev npx prisma generate",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write ."
@@ -32,6 +33,7 @@
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
+    "dotenv-cli": "^8.0.0",
     "express": "^5.1.0",
     "install": "^0.13.0",
     "module-alias": "^2.2.3",

@@ -14,6 +14,8 @@ src/generated
 lerna-debug.log
 .npmrc
 .nvmrc
+.env.dev
+.env.prod
 
 # tests
 /coverage

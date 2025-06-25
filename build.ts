@@ -23,6 +23,7 @@ async function writeSlimPackageJson() {
     main: 'index.js',
     scripts: {
       start: 'cross-env NODE_ENV=prod node index.js',
+      'prisma:generate': 'dotenv -e .env.prod npx prisma generate',
     },
     dependencies: rawPkg.dependencies || {},
     engines: rawPkg.engines,
@@ -58,11 +59,15 @@ function runTsupBuild(): Promise<void> {
  * 复制非代码资源（如 json、env）以及 public 文件夹和 Prisma client
  */
 export async function copyAssets() {
-  const ASSET_PATTERNS = ['src/**/*.json', 'src/**/*.env.dev']
+  const ASSET_PATTERNS = [
+    'src/**/*.json',
+    'src/**/*.env.dev',
+    '!src/generated/**',
+  ]
   const PUBLIC_DIR = 'public'
   const ENV_FILES_PATTERN = '.env.*'
 
-  // 1. 复制 public 文件夹
+  // 复制 public 文件夹
   try {
     const src = path.resolve(__dirname, PUBLIC_DIR)
     const dest = path.resolve(DIST_DIR, PUBLIC_DIR)
@@ -73,7 +78,18 @@ export async function copyAssets() {
     throw err
   }
 
-  // 2. 复制所有 .env.* 文件
+  // 复制 prisma 文件夹
+  try {
+    const src = path.resolve(__dirname, 'prisma')
+    const dest = path.resolve(DIST_DIR, 'prisma')
+    await fse.copy(src, dest)
+    console.log(`✅ 复制 prisma 文件夹`)
+  } catch (err) {
+    console.error(`❌ 复制 prisma 文件夹失败`, err)
+    throw err
+  }
+
+  // 复制所有 .env.* 文件
   try {
     const envFiles = await fg(ENV_FILES_PATTERN, { cwd: __dirname })
     for (const file of envFiles) {
@@ -87,7 +103,7 @@ export async function copyAssets() {
     throw err
   }
 
-  // 3. 复制 JSON 和 ENV 文件
+  // 复制 JSON 和 ENV 文件
   for (const pattern of ASSET_PATTERNS) {
     try {
       const files = await globby(pattern)
@@ -104,17 +120,17 @@ export async function copyAssets() {
     }
   }
 
-  // 4. ✅ 复制 Prisma client（整个目录）
-  const prismaSrc = path.resolve(__dirname, './src/generated/prisma')
-  const prismaDest = path.resolve(DIST_DIR, 'generated/prisma')
-
-  try {
-    await fse.copy(prismaSrc, prismaDest)
-    console.log('✅ 复制 Prisma Client 到 dist/generated/prisma')
-  } catch (err) {
-    console.error('❌ 复制 Prisma Client 失败', err)
-    throw err
-  }
+  // // 4. ✅ 复制 Prisma client（整个目录）
+  // const prismaSrc = path.resolve(__dirname, './src/generated/prisma')
+  // const prismaDest = path.resolve(DIST_DIR, 'generated/prisma')
+  //
+  // try {
+  //   await fse.copy(prismaSrc, prismaDest)
+  //   console.log('✅ 复制 Prisma Client 到 dist/generated/prisma')
+  // } catch (err) {
+  //   console.error('❌ 复制 Prisma Client 失败', err)
+  //   throw err
+  // }
 }
 
 /**

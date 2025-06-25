@@ -1,5 +1,5 @@
-import { PrismaClient } from '@/generated/prisma'
-import type { sys_menu } from '@/generated/prisma'
+import { PrismaClient } from '../../generated/prisma'
+import type { sys_menu } from '../../generated/prisma'
 
 class MenuService {
   private prisma: PrismaClient
@@ -12,7 +12,11 @@ class MenuService {
    * 获取菜单列表
    */
   public getMenuList(): Promise<sys_menu[]> {
-    return this.prisma.sys_menu.findMany()
+    return this.prisma.sys_menu.findMany({
+      where: {
+        id: 1,
+      },
+    })
   }
 }
 

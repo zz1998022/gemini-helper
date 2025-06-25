@@ -30,9 +30,11 @@ const outFile =
 // 确定输出路径
 const outputFilePath = path.resolve(__dirname, outFile)
 
-// 写入文件
-fs.writeFileSync(outputFilePath, JSON.stringify(swaggerSpec, null, 2))
+// 开发环境下写入swagger.json
+if (mode === 'dev') {
+  fs.writeFileSync(outputFilePath, JSON.stringify(swaggerSpec, null, 2))
 
-console.log(`✅ Swagger JSON 已生成在：${outputFilePath}`)
+  console.log(`✅ Swagger JSON 已生成在：${outputFilePath}`)
+}
 
 export default swaggerSpec
