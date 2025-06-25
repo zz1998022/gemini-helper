@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 
 import ChatService from '@svcs/gemini/ChatService'
+import logger from '@utils/logger'
 import ResponseModel from '@utils/response'
 
 class ChatController {
@@ -15,6 +16,7 @@ class ChatController {
       const reply = await ChatService.chat(message)
       res.json(ResponseModel.success(reply))
     } catch (error) {
+      logger.error('Error in chat', error)
       console.error('Error in chat:', error)
       res.status(500).json(ResponseModel.serverError())
     }
@@ -40,7 +42,8 @@ class ChatController {
 
       res.end()
     } catch (error) {
-      console.error('Error in chat:', error)
+      console.error('Error in chat-stream:', error)
+      logger.error('Error in chat-stream', error)
       res.status(500).json(ResponseModel.serverError())
     }
   }

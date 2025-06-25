@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "D:\\Workspace\\Gemin-Project\\后台\\gemini-helper\\logs\\.6ee490f5178ffbfc6f753ce8e2c4824d15645e89-audit.json",
+    "files": [
+        {
+            "date": 1750823372595,
+            "name": "D:\\Workspace\\Gemin-Project\\后台\\gemini-helper\\logs\\combined-2025-06-25.log",
+            "hash": "029c4450fa6861f39487d998aa1f305920a7e4650c04a4913728f4bbbfc2f8fb"
+        }
+    ],
+    "hashType": "sha256"
+}

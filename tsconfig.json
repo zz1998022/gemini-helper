@@ -12,6 +12,7 @@
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
+      "@/*": ["./src/*"],
       "@src/*": ["./src/*"],
       "@utils/*": ["./src/utils/*"],
       "@svcs/*": ["./src/services/*"],

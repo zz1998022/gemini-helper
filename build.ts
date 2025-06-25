@@ -40,68 +40,80 @@ async function writeSlimPackageJson() {
 function runTsupBuild(): Promise<void> {
   const { exec } = require('child_process')
   return new Promise((resolve, reject) => {
-    exec('tsc && tsc-alias -p ./tsconfig.json', (error: any, stdout: any) => {
-      if (error) {
-        console.error(`❌ 构建失败: ${error.message}`)
-        return reject(error)
-      }
-      console.log(stdout)
-      resolve()
-    })
+    exec(
+      'tsc --project tsconfig.json && tsc-alias -p tsconfig.json',
+      (error: any, stdout: any) => {
+        if (error) {
+          console.error(`❌ 构建失败: ${error.message}`)
+          return reject(error)
+        }
+        console.log(stdout)
+        resolve()
+      },
+    )
   })
 }
 
 /**
- * 复制非代码资源（如 json、env）以及 public 文件夹
+ * 复制非代码资源（如 json、env）以及 public 文件夹和 Prisma client
  */
-async function copyAssets() {
+export async function copyAssets() {
   const ASSET_PATTERNS = ['src/**/*.json', 'src/**/*.env.dev']
   const PUBLIC_DIR = 'public'
-  const ENV_FILES_PATTERN = '.env.*' // 匹配所有以 .env.dev 开头的文件
+  const ENV_FILES_PATTERN = '.env.*'
 
-  // 复制 public 文件夹到 dist 目录
+  // 1. 复制 public 文件夹
   try {
-    await fse.copy(
-      path.join(__dirname, PUBLIC_DIR),
-      path.join(DIST_DIR, PUBLIC_DIR),
-    )
-    console.log(`✅ 复制资源: ${PUBLIC_DIR}`)
+    const src = path.resolve(__dirname, PUBLIC_DIR)
+    const dest = path.resolve(DIST_DIR, PUBLIC_DIR)
+    await fse.copy(src, dest)
+    console.log(`✅ 复制 public 文件夹`)
   } catch (err) {
-    console.error(`❌ 复制资源失败: ${PUBLIC_DIR}`, err)
-    throw err // 抛出错误以便 main 函数捕获
+    console.error(`❌ 复制 public 文件夹失败`, err)
+    throw err
   }
 
-  // 复制所有 .env.dev 文件到 dist 目录
+  // 2. 复制所有 .env.* 文件
   try {
     const envFiles = await fg(ENV_FILES_PATTERN, { cwd: __dirname })
-
     for (const file of envFiles) {
       const srcPath = path.join(__dirname, file)
       const destPath = path.join(DIST_DIR, file)
       await fse.copy(srcPath, destPath)
-      console.log(`✅ 复制资源: ${file}`)
+      console.log(`✅ 复制 .env 文件: ${file}`)
     }
   } catch (err) {
-    console.error(`❌ 复制资源失败: ${ENV_FILES_PATTERN}`, err)
-    throw err // 抛出错误以便 main 函数捕获
+    console.error(`❌ 复制 .env 文件失败`, err)
+    throw err
   }
 
-  // 复制其他资源文件
+  // 3. 复制 JSON 和 ENV 文件
   for (const pattern of ASSET_PATTERNS) {
     try {
-      // 使用 globby 来匹配文件并复制
       const files = await globby(pattern)
-
       for (const file of files) {
-        const relativePath = path.relative(path.dirname(pattern), file)
+        const relativePath = path.relative(path.resolve(__dirname, 'src'), file)
         const destPath = path.join(DIST_DIR, relativePath)
+        await fse.ensureDir(path.dirname(destPath))
         await fse.copy(file, destPath)
-        console.log(`✅ 复制资源: ${file}`)
+        console.log(`✅ 复制文件: ${file}`)
       }
     } catch (err) {
-      console.error(`❌ 复制资源失败: ${pattern}`, err)
-      throw err // 抛出错误以便 main 函数捕获
+      console.error(`❌ 复制文件失败: ${pattern}`, err)
+      throw err
     }
+  }
+
+  // 4. ✅ 复制 Prisma client（整个目录）
+  const prismaSrc = path.resolve(__dirname, './src/generated/prisma')
+  const prismaDest = path.resolve(DIST_DIR, 'generated/prisma')
+
+  try {
+    await fse.copy(prismaSrc, prismaDest)
+    console.log('✅ 复制 Prisma Client 到 dist/generated/prisma')
+  } catch (err) {
+    console.error('❌ 复制 Prisma Client 失败', err)
+    throw err
   }
 }
 

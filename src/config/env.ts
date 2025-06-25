@@ -5,7 +5,7 @@ import { z } from 'zod'
 
 const mode = process.env.NODE_ENV ?? 'dev'
 const envFile = `.env.${mode}`
-console.log(path.resolve(process.cwd(), envFile))
+
 config({
   path: path.resolve(process.cwd(), envFile),
 }) // 读取对应环境变量文件

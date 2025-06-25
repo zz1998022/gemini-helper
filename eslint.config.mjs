@@ -60,7 +60,19 @@ export default tseslint.config(
         },
       ],
       'import/no-unresolved': 'error',
-      'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: [
+            0,
+            {
+              devDependencies: true,
+              peerDependencies: false,
+            },
+          ],
+          // optionalDependencies: false,
+        },
+      ],
     },
   },
   {

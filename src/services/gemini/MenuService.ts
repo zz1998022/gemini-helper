@@ -1,5 +1,5 @@
-import { PrismaClient } from '@src/generated/prisma'
-import type { sys_menu } from '@src/generated/prisma'
+import { PrismaClient } from '@/generated/prisma'
+import type { sys_menu } from '@/generated/prisma'
 
 class MenuService {
   private prisma: PrismaClient

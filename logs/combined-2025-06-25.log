@@ -1,0 +1,17 @@
+2025-06-25 13:22:09 [info]: GET /api-docs/ 304 - - 4.339 ms
+2025-06-25 13:22:10 [info]: GET /api-docs/swagger-ui.css 304 - - 2.264 ms
+2025-06-25 13:22:10 [info]: GET /api-docs/swagger-ui-bundle.js 304 - - 2.052 ms
+2025-06-25 13:22:10 [info]: GET /api-docs/swagger-ui-init.js 200 8450 - 1.631 ms
+2025-06-25 13:22:10 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 - - 3.856 ms
+2025-06-25 13:22:11 [info]: GET /api-docs/ 304 - - 1.134 ms
+2025-06-25 13:22:11 [info]: GET /api-docs/swagger-ui.css 304 - - 1.071 ms
+2025-06-25 13:22:11 [info]: GET /api-docs/swagger-ui-init.js 304 - - 1.232 ms
+2025-06-25 13:22:11 [info]: GET /api-docs/swagger-ui-bundle.js 304 - - 4.556 ms
+2025-06-25 13:22:11 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 - - 4.504 ms
+2025-06-25 13:22:23 [info]: GET /api-docs/ 304 - - 0.797 ms
+2025-06-25 13:22:23 [info]: GET /api-docs/swagger-ui.css 304 - - 0.817 ms
+2025-06-25 13:22:23 [info]: GET /api-docs/swagger-ui-bundle.js 304 - - 2.409 ms
+2025-06-25 13:22:23 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 - - 2.662 ms
+2025-06-25 13:22:23 [info]: GET /api-docs/swagger-ui-init.js 304 - - 2.476 ms
+2025-06-25 13:22:23 [info]: GET /api-docs/favicon-32x32.png 304 - - 0.703 ms
+2025-06-25 13:22:28 [info]: GET /api/menu/menuList?pageNum=1&pageSize=11 200 24528 - 92.291 ms

@@ -11,6 +11,7 @@ import swaggerDocument from '@config/swagger'
 import ChatRoute from '@src/routes/gemini/chatRoute'
 import MenuRoute from '@src/routes/gemini/menuRoute'
 import UploadRoute from '@src/routes/gemini/uploadRoute'
+import requestLogger from '@utils/requestLogger'
 
 // 加载 .env.dev 文件中的环境变量
 dotenv.config()
@@ -33,6 +34,7 @@ class App {
 
   private middleware(): void {
     this.express.use(express.json())
+    this.express.use(requestLogger)
   }
 
   private routes(): void {
