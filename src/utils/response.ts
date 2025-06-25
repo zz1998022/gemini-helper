@@ -23,7 +23,7 @@ class ResponseModel<T = any> implements BaseResponse<T> {
   }
 
   // 错误时返回的方法
-  static error(code: number, msg: string): ResponseModel<null> {
+  static error(code: number, msg: string | any): ResponseModel<null> {
     return new ResponseModel<null>(code, msg, null)
   }
 
