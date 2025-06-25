@@ -22,8 +22,13 @@ const options: swaggerJSDoc.Options = {
 }
 
 const swaggerSpec = swaggerJSDoc(options)
+
+// 获取当前环境变量
+const mode = process.env.NODE_ENV as string
+const outFile =
+  mode === 'dev' ? '../../public/swagger.json' : '../public/swagger.json'
 // 确定输出路径
-const outputFilePath = path.resolve(__dirname, '../../public/swagger.json')
+const outputFilePath = path.resolve(__dirname, outFile)
 
 // 写入文件
 fs.writeFileSync(outputFilePath, JSON.stringify(swaggerSpec, null, 2))

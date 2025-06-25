@@ -1,4 +1,5 @@
 import 'module-alias/register'
+
 import dotenv from 'dotenv'
 
 import { env } from '@config/env'
@@ -12,7 +13,7 @@ setupUndiciProxy()
 
 import App from './app'
 
-const PORT = process.env.PORT || 4000
+const PORT = env.PORT || 4000
 const app = new App()
 
 app.express.listen(PORT, () => {

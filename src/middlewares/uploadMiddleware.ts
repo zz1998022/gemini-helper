@@ -4,7 +4,7 @@ import path from 'path'
 import multer from 'multer'
 
 // 设置上传文件存储路径
-const uploadDir = path.join(__dirname, '../..', 'uploads')
+const uploadDir = path.join(__dirname, '../', 'uploads')
 
 // 如果目录不存在则创建
 if (!fs.existsSync(uploadDir)) {

@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sys_film_library {
+  id           Int       @id @default(autoincrement())
+  film_name    String?   @db.VarChar(100)
+  event_table  String?   @db.VarChar(255)
+  film_library String?   @db.MediumText
+  cut_word     String?   @db.MediumText
+  create_id    Int?
+  create_by    String?   @db.VarChar(100)
+  create_time  DateTime? @db.DateTime(0)
+  update_id    Int?
+  update_by    String?   @db.VarChar(100)
+  update_time  DateTime? @db.DateTime(0)
+  is_delete    Int?      @default(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sys_log {
+  id         BigInt    @id
+  url        String?   @db.VarChar(255)
+  request    String?   @db.VarChar(2000)
+  response   String?   @db.Text
+  start_time DateTime? @db.DateTime(0)
+  end_time   DateTime? @db.DateTime(0)
+  ip         String?   @db.VarChar(255)
+  status     String?   @db.VarChar(255)
+  token      String?   @db.VarChar(255)
+  user_id    BigInt?
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sys_menu {
+  id          Int       @id @default(autoincrement())
+  name        String?   @db.VarChar(100)
+  code        String?   @db.VarChar(255)
+  type        Int?
+  parent_id   Int?
+  order_num   Int?
+  icon        String?   @db.VarChar(100)
+  url         String?   @db.VarChar(100)
+  remark      String?   @db.VarChar(100)
+  target      String?   @db.VarChar(100)
+  create_id   Int?
+  create_by   String?   @db.VarChar(255)
+  create_time DateTime? @db.DateTime(0)
+  update_id   Int?
+  update_by   String?   @db.VarChar(255)
+  update_time DateTime? @db.DateTime(0)
+  is_delete   Int?      @default(0) @db.TinyInt
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sys_narrate_record {
+  id                 Int       @id @default(autoincrement())
+  user_id            Int?
+  user_name          String?   @db.VarChar(255)
+  narrate_date       DateTime? @db.DateTime(0)
+  script_catalog     String?   @db.VarChar(255)
+  scheme             String?   @db.VarChar(255)
+  duration           Int?
+  consumption_points BigInt?
+  is_download        Int?
+  create_id          Int?
+  create_by          String?   @db.VarChar(100)
+  create_time        DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sys_recharge_record {
+  id              Int       @id @default(autoincrement())
+  user_id         Int?
+  user_name       String?   @db.VarChar(255)
+  recharge_money  Decimal?  @db.Decimal(10, 2)
+  recharge_points BigInt?
+  create_id       Int?
+  create_by       String?   @db.VarChar(100)
+  create_time     DateTime? @db.DateTime(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sys_role {
+  id          Int       @id @default(autoincrement())
+  role_name   String?   @db.VarChar(100)
+  state       Int?
+  create_id   Int?
+  create_by   String?   @db.VarChar(100)
+  create_time DateTime? @db.DateTime(0)
+  update_id   Int?
+  update_by   String?   @db.VarChar(100)
+  update_time DateTime? @db.DateTime(0)
+  is_delete   Int?      @default(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sys_role_menu {
+  id          Int       @id @default(autoincrement())
+  role_id     Int?
+  menu_id     Int?
+  type        Int?
+  create_id   Int?
+  create_by   String?   @db.VarChar(100)
+  create_time DateTime? @db.DateTime(0)
+  is_delete   Int?      @default(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model sys_user {
+  id                  Int       @id @default(autoincrement())
+  account_num         String?   @db.VarChar(100)
+  password            String?   @db.VarChar(100)
+  user_name           String?   @db.VarChar(100)
+  phone               String?   @db.VarChar(100)
+  state               Int?
+  role_id             Int?
+  role_name           String?   @db.VarChar(100)
+  create_id           Int?
+  create_by           String?   @db.VarChar(100)
+  create_time         DateTime? @db.DateTime(0)
+  update_id           Int?
+  update_by           String?   @db.VarChar(100)
+  update_time         DateTime? @db.DateTime(0)
+  is_delete           Int?      @default(0)
+  balance             BigInt?
+  recharge_sum_points BigInt?
+  consume_sum_points  BigInt?
+}

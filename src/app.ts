@@ -1,3 +1,4 @@
+import fs from 'fs'
 import path from 'path'
 
 import cors from 'cors'
@@ -9,10 +10,11 @@ import swaggerUi from 'swagger-ui-express'
 import ChatRoute from '@src/routes/gemini/chatRoute'
 import UploadRoute from '@src/routes/gemini/uploadRoute'
 
-import swaggerDocument from './config/swagger'
-
-// 加载 .env 文件中的环境变量
+// 加载 .env.dev 文件中的环境变量
 dotenv.config()
+
+// 获取当前环境
+const mode = process.env.NODE_ENV ?? 'dev'
 
 class App {
   public express: express.Application
@@ -37,6 +39,11 @@ class App {
   }
 
   private swagger(): void {
+    const staticFile = mode === 'dev' ? '../public' : './public'
+    // 👇 读取 swagger.json 文件
+    const swaggerPath = path.join(__dirname, staticFile, 'swagger.json') // 根据实际路径调整
+    const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf8'))
+
     this.express.use(
       '/api-docs',
       swaggerUi.serve,
@@ -49,7 +56,8 @@ class App {
   }
 
   private staticFile(): void {
-    this.express.use(express.static(path.join(__dirname, '../public')))
+    const staticFile = mode === 'dev' ? '../public' : './public'
+    this.express.use(express.static(path.join(__dirname, staticFile)))
   }
 
   /**
@@ -73,13 +81,14 @@ class App {
       }
 
       if (accept.includes('text/html')) {
-        const filePath = path.join(__dirname, '../public/404.html')
+        const staticFile = mode === 'dev' ? '../public' : './public'
+        const filePath = path.join(__dirname, `${staticFile}/404.html`)
         res.status(404).sendFile(filePath)
         return
       }
 
       res.status(404).type('txt').send('Not Found')
-    }) as express.RequestHandler) // 👈 加上类型断言
+    }) as express.RequestHandler)
   }
 }
 

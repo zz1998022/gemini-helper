@@ -22,7 +22,7 @@ async function writeSlimPackageJson() {
     description: rawPkg.description,
     main: 'index.js',
     scripts: {
-      start: 'node index.js',
+      start: 'cross-env NODE_ENV=prod node index.js',
     },
     dependencies: rawPkg.dependencies || {},
     engines: rawPkg.engines,
@@ -35,12 +35,12 @@ async function writeSlimPackageJson() {
 }
 
 /**
- * 使用 tsup 构建 src 下所有 .ts 文件
+ * 使用 tsc 构建 src 下所有 .ts 文件
  */
 function runTsupBuild(): Promise<void> {
   const { exec } = require('child_process')
   return new Promise((resolve, reject) => {
-    exec('tsup src/**/*.ts', (error: any, stdout: any) => {
+    exec('tsc && tsc-alias -p ./tsconfig.json', (error: any, stdout: any) => {
       if (error) {
         console.error(`❌ 构建失败: ${error.message}`)
         return reject(error)
@@ -55,9 +55,9 @@ function runTsupBuild(): Promise<void> {
  * 复制非代码资源（如 json、env）以及 public 文件夹
  */
 async function copyAssets() {
-  const ASSET_PATTERNS = ['src/**/*.json', 'src/**/*.env']
+  const ASSET_PATTERNS = ['src/**/*.json', 'src/**/*.env.dev']
   const PUBLIC_DIR = 'public'
-  const ENV_FILES_PATTERN = '.env*' // 匹配所有以 .env 开头的文件
+  const ENV_FILES_PATTERN = '.env.*' // 匹配所有以 .env.dev 开头的文件
 
   // 复制 public 文件夹到 dist 目录
   try {
@@ -71,10 +71,9 @@ async function copyAssets() {
     throw err // 抛出错误以便 main 函数捕获
   }
 
-  // 复制所有 .env 文件到 dist 目录
+  // 复制所有 .env.dev 文件到 dist 目录
   try {
     const envFiles = await fg(ENV_FILES_PATTERN, { cwd: __dirname })
-    console.log(envFiles)
 
     for (const file of envFiles) {
       const srcPath = path.join(__dirname, file)

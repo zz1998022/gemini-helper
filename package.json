@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=dev nodemon --watch src/**/*.ts --exec tsx -r module-alias/register src/index.ts",
     "build": "tsx build.ts",
-    "start": "node dist/index.js",
+    "start": "cross-env NODE_ENV=prod node dist/index.js",
+    "start:prod": "cross-env NODE_ENV=prod node dist/index.js",
     "generate:swagger": "tsx scripts/generate-swagger-json.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
@@ -26,6 +27,7 @@
   "dependencies": {
     "@google/genai": "^1.4.0",
     "@google/generative-ai": "^0.24.1",
+    "@prisma/client": "^6.10.1",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
@@ -72,8 +74,8 @@
     "nodemon": "^3.1.10",
     "pkg-up": "^5.0.0",
     "prettier": "^3.5.3",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.5.0",
+    "prisma": "^6.10.1",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
