@@ -1,7 +1,7 @@
 import express from 'express'
 
-import controller from '../../controllers/v1/ChatController'
-import chatController from '../../controllers/v1/ChatController'
+import controller from '@ctrls/gemini/ChatController'
+import chatController from '@ctrls/gemini/ChatController'
 
 /**
  * @openapi

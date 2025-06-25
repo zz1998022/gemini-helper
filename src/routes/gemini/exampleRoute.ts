@@ -1,6 +1,6 @@
 import express from 'express'
 
-import controller from '../../controllers/v1/ExampleController'
+import controller from '@ctrls/gemini/ExampleController'
 
 const router = express.Router()
 

@@ -7,7 +7,9 @@ import express from 'express'
 import { Request, Response, NextFunction } from 'express'
 import swaggerUi from 'swagger-ui-express'
 
+import swaggerDocument from '@config/swagger'
 import ChatRoute from '@src/routes/gemini/chatRoute'
+import MenuRoute from '@src/routes/gemini/menuRoute'
 import UploadRoute from '@src/routes/gemini/uploadRoute'
 
 // 加载 .env.dev 文件中的环境变量
@@ -36,13 +38,15 @@ class App {
   private routes(): void {
     this.express.use('/api/common', UploadRoute)
     this.express.use('/api/gemini', ChatRoute)
+    this.express.use('/api/menu', MenuRoute)
   }
 
   private swagger(): void {
     const staticFile = mode === 'dev' ? '../public' : './public'
     // 👇 读取 swagger.json 文件
-    const swaggerPath = path.join(__dirname, staticFile, 'swagger.json') // 根据实际路径调整
-    const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf8'))
+    // const swaggerPath = path.join(__dirname, staticFile, 'swagger.json') // 根据实际路径调整
+    // const swaggerDocument = JSON.parse(fs.readFileSync(swaggerPath, 'utf8'))
+    // console.log(swaggerDocument)
 
     this.express.use(
       '/api-docs',

@@ -1,6 +1,7 @@
 import express from 'express'
 
-import controller from '../../controllers/v1/UploadController'
+import controller from '@ctrls/gemini/UploadController'
+
 import uploadMiddleware from '../../middlewares/uploadMiddleware'
 
 /**

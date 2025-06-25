@@ -26,6 +26,14 @@ class ResponseModel<T = any> implements BaseResponse<T> {
   static error(code: number, msg: string): ResponseModel<null> {
     return new ResponseModel<null>(code, msg, null)
   }
+
+  // 服务器错误返回的方法
+  static serverError(
+    code: number = 500,
+    msg: string = 'Internal Server Error',
+  ): ResponseModel<null> {
+    return new ResponseModel<null>(code, msg, null)
+  }
 }
 
 export default ResponseModel
